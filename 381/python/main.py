@@ -1,0 +1,61 @@
+import collections
+import random
+
+
+class RandomizedCollection:
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.vector = []
+        self.N = 0
+        self.elem2idxs = collections.defaultdict(set)
+
+    def insert(self, val: int) -> bool:
+        """
+        Inserts a value to the collection. Returns true if the collection did not already contain the specified element.
+        """
+        contain = len(self.elem2idxs[val])
+        self.elem2idxs[val].add(self.N)
+        if len(self.vector) <= self.N:
+            self.vector.append(val)
+        else:
+            self.vector[self.N] = val
+        self.N += 1
+        return not bool(contain)
+
+    def remove(self, val: int) -> bool:
+        """
+        Removes a value from the collection. Returns true if the collection contained the specified element.
+        """
+
+        if len(self.elem2idxs[val]):
+            idx = self.elem2idxs[val].pop()
+            if idx != self.N - 1:
+                other = self.vector[self.N - 1]
+                self.vector[idx] = other
+                self.elem2idxs[other].remove(self.N - 1)
+                self.elem2idxs[other].add(idx)
+            self.N -= 1
+            return True
+        return False
+
+    def getRandom(self) -> int:
+        """
+        Get a random element from the collection.
+        """
+        return random.choice(self.vector[:self.N])
+
+
+rc = RandomizedCollection()
+rc.insert(1)
+rc.insert(1)
+rc.insert(2)
+rc.insert(1)
+rc.insert(2)
+rc.insert(2)
+rc.remove(1)
+rc.remove(2)
+rc.remove(2)
+rc.remove(2)
