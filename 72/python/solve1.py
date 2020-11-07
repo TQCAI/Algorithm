@@ -1,0 +1,26 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Author  : qichun tang
+# @Contact    : tqichun@gmail.com
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        N = len(word1)
+        M = len(word2)
+        dp = [[0] * (M + 1) for _ in range(N + 1)]
+        for i in range(1, M + 1):
+            dp[0][i] = i
+        for i in range(1, N + 1):
+            dp[i][0] = i
+        for i in range(1, N + 1):
+            for j in range(1, M + 1):
+                left = dp[i - 1][j] + 1
+                down = dp[i][j - 1] + 1
+                left_down = dp[i - 1][j - 1]
+                if word1[i - 1] != word2[j - 1]:
+                    left_down += 1
+                dp[i][j] = min(left, down, left_down)
+        return dp[N][M]
+
+
+res = Solution().minDistance("intention", "execution")
+print(res)
