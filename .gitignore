@@ -7,3 +7,4 @@ out
 cmake-build-debug
 *.so
 *.exe
+test.md
