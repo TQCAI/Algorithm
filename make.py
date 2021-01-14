@@ -35,7 +35,7 @@ def get_level_title(str_: str) -> Tuple[int, str]:
 
 
 class Node():
-    def __init__(self, level=0, title=None, lines=None):
+    def __init__(self, level=0, title="QC刷题笔记", lines=None):
         self.level = level
         if lines is None:
             lines = []
@@ -139,15 +139,15 @@ class Node():
 
         def rec(node: Node, level=0, path="notes"):
             # 非叶子结点
-            prefix = " " * (level * 4) + "- "
+            prefix = " " * ((level) * 4) + "- "
             toc_list.append(f"{prefix}[{node.title}]")
             cur_path = path + "/" + node.title
             # link = f"'{cur_path}'"
-            link=cur_path.replace(" ","-")
+            link = cur_path.replace(" ", "%20")
             if node.children:
                 toc_list[-1] += f"({link})"
                 for child in node.children:
-                    rec(child, level + 1,cur_path)
+                    rec(child, level + 1, cur_path)
             else:
                 toc_list[-1] += f"({link}.md)"
 
