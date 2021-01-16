@@ -35,7 +35,7 @@ def get_level_title(str_: str) -> Tuple[int, str]:
 
 
 class Node():
-    def __init__(self, level=0, title="QC刷题笔记", lines=None):
+    def __init__(self, level=0, title="notes", lines=None, is_root=False):
         self.level = level
         if lines is None:
             lines = []
@@ -44,6 +44,7 @@ class Node():
         self.lines = lines
         self.title = title
         self.children = []
+        self.is_root = is_root
 
     def __str__(self):
         return "#" * self.level + " " + self.title
@@ -82,7 +83,7 @@ class Node():
         cur_lines = []
         level2nodes: Dict[int, List[Node]] = defaultdict(list)
         level2nodes.update({
-            0: [Node()]  # root
+            0: [Node(is_root=True)]  # root
         })
 
         pre_node = cur_node = None
@@ -116,13 +117,13 @@ class Node():
         md_txt = Path(file).read_text()
         return Node.from_md(md_txt)
 
-    def dump_to_dir(self, dir_name="notes"):
+    def dump_to_dir(self, dir_name="."):
         notes_dir = Path(dir_name)
         notes_dir.mkdir(parents=True, exist_ok=True)
 
         def rec(node: Node, path: Path):
             # 非叶子结点
-            if node.children:
+            if node.children :
                 cur_path = path / node.title
                 (cur_path).mkdir(parents=True, exist_ok=True)
                 for child in node.children:
@@ -137,7 +138,7 @@ class Node():
     def build_toc(self):
         toc_list = []
 
-        def rec(node: Node, level=0, path="notes"):
+        def rec(node: Node, level=0, path="."):
             # 非叶子结点
             prefix = " " * ((level) * 4) + "- "
             toc_list.append(f"{prefix}[{node.title}]")
