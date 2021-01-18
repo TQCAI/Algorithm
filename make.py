@@ -6,9 +6,7 @@
 import warnings
 from collections import defaultdict
 from pathlib import Path
-from typing import Dict
-from typing import List
-from typing import Tuple
+from typing import Dict, List, Tuple
 
 
 def strip_lines(lines: List[str]):
@@ -35,7 +33,7 @@ def get_level_title(str_: str) -> Tuple[int, str]:
 
 
 class Node():
-    def __init__(self, level=0, title="notes", lines=None, is_root=False):
+    def __init__(self, level=0, title="notes", lines=None):
         self.level = level
         if lines is None:
             lines = []
@@ -44,7 +42,6 @@ class Node():
         self.lines = lines
         self.title = title
         self.children = []
-        self.is_root = is_root
 
     def __str__(self):
         return "#" * self.level + " " + self.title
@@ -53,12 +50,13 @@ class Node():
 
     def get_md(self):
         lines = [
-            "@[toc]",
-            ""
+            # "@[toc]",
+            # ""
         ]
 
         def rec(node: Node):
-            lines.append(str(node))
+            if node.level:
+                lines.append(str(node))
             lines.append('')
             # 非叶子结点
             if node.children:
@@ -83,7 +81,7 @@ class Node():
         cur_lines = []
         level2nodes: Dict[int, List[Node]] = defaultdict(list)
         level2nodes.update({
-            0: [Node(is_root=True)]  # root
+            0: [Node()]  # root
         })
 
         pre_node = cur_node = None
@@ -92,7 +90,6 @@ class Node():
 
             if line.startswith("#") and (not code_field):
                 level, title = get_level_title(line)
-
                 cur_node = pre_node
                 pre_node = Node(level, title)
                 if cur_node:
@@ -123,7 +120,7 @@ class Node():
 
         def rec(node: Node, path: Path):
             # 非叶子结点
-            if node.children :
+            if node.children:
                 cur_path = path / node.title
                 (cur_path).mkdir(parents=True, exist_ok=True)
                 for child in node.children:
@@ -135,7 +132,20 @@ class Node():
 
         rec(self, notes_dir)
 
-    def build_toc(self):
+    @classmethod
+    def load_from_dir(cls, dir_name="notes"):
+
+        def rec(path: Path, level=0):
+            if path.is_file():
+                node = Node(level, path.name[:-2], path.read_text().splitlines())
+            else:
+                node = Node(level, path.name)
+                node.children = [rec(sub_path, level + 1) for sub_path in path.iterdir()]
+            return node
+
+        return rec(Path(dir_name))
+
+    def build_file_toc(self):
         toc_list = []
 
         def rec(node: Node, level=0, path="."):
@@ -155,13 +165,29 @@ class Node():
         rec(self)
         return "\n".join(toc_list)
 
+    def build_content_toc(self):
+        toc_list = []
+
+        def rec(node: Node, level=0):
+            # 非叶子结点
+            prefix = " " * ((level) * 4) + "- "
+            # 仅兼容github
+            toc_list.append(f"{prefix}[{node.title}](#{node.title.replace(' ', '-').replace('.', '')})")
+            for child in node.children:
+                rec(child, level + 1)
+
+        rec(self)
+        return "\n".join(toc_list)
+
 
 def md2dir():
     node = Node.from_md_file()
     node.dump_to_dir()
-    toc = node.build_toc()
+    toc = node.build_file_toc()
     Path("README.md").write_text(toc)
 
 
 if __name__ == '__main__':
-    md2dir()
+    node = Node.load_from_dir()
+    md = node.build_content_toc() + "\n\n" + node.get_md()
+    Path("docs/notes.md").write_text(md)
