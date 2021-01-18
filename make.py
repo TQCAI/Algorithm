@@ -137,7 +137,7 @@ class Node():
 
         def rec(path: Path, level=0):
             if path.is_file():
-                node = Node(level, path.name[:-2], path.read_text().splitlines())
+                node = Node(level, path.name[:-3], path.read_text().splitlines())
             else:
                 node = Node(level, path.name)
                 node.children = [rec(sub_path, level + 1) for sub_path in path.iterdir()]
@@ -172,7 +172,7 @@ class Node():
             # 非叶子结点
             prefix = " " * ((level) * 4) + "- "
             # 仅兼容github
-            toc_list.append(f"{prefix}[{node.title}](#{node.title.replace(' ', '-').replace('.', '')})")
+            toc_list.append(f"{prefix}[{node.title}](#{node.title.replace(' ', '-').replace('.', '').replace(',', '')})")
             for child in node.children:
                 rec(child, level + 1)
 
