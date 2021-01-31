@@ -12,3 +12,11 @@ class Solution:
             self.buildTree(preorder[in_ix + 1:], inorder[in_ix + 1:]),
         )
 ```
+
+
+面试题8没有
+
+
+逻辑上难度不大
+
+[08_NextNodeInBinaryTrees](https://github.com/zhedahht/CodingInterviewChinese2/blob/master/08_NextNodeInBinaryTrees/NextNodeInBinaryTrees.cpp)

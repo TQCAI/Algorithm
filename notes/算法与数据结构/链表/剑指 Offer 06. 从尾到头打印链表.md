@@ -9,3 +9,5 @@ class Solution:
             return []
         return self.reversePrint(head.next) + [head.val]
 ```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210130172744686.png)
