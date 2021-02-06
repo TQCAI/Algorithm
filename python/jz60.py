@@ -9,5 +9,7 @@ class Solution:
             dp[1][k] = base
         for i in range(2, n + 1):
             for j in range(i, 6 * i + 1):
+                # i-1表示上一个状态的色子数
+                # 从点数和为j-1到点数和为j-6
                 dp[i][j] = sum(dp[i - 1][max(0, j - 6):j]) * base
         return dp[n][n:]
