@@ -1,5 +1,11 @@
 [剑指 Offer 60. n个骰子的点数](https://leetcode-cn.com/problems/nge-tou-zi-de-dian-shu-lcof/)
 
+[【n个骰子的点数】：详解动态规划及其优化方式](https://leetcode-cn.com/problems/nge-tou-zi-de-dian-shu-lcof/solution/nge-tou-zi-de-dian-shu-dong-tai-gui-hua-ji-qi-yo-3/)
+
+[概率论乘法公式+动态规划](https://leetcode-cn.com/problems/nge-tou-zi-de-dian-shu-lcof/solution/gai-lu-lun-cheng-fa-gong-shi-dong-tai-gu-77ts/)
+
+TODO: 状压优化
+
 ```python
 class Solution:
     def dicesProbability(self, n: int) -> List[float]:
