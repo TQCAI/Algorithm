@@ -1,18 +1,7 @@
-[454. 四数相加 II](https://leetcode-cn.com/problems/4sum-ii/)
-```python
-class Solution:
-    def fourSumCount(self, A: List[int], B: List[int], C: List[int], D: List[int]) -> int:
-        counter = collections.Counter(u + v for u in A for v in B)
-        res = 0
-        for u in C:
-            for v in D:
-                tmp = -(u + v)
-                if tmp in counter:
-                    res += counter[tmp]
-        return res
-```
+#include "bits/stdc++.h"
 
-```cgo
+using namespace std;
+
 class Solution {
 public:
     int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
@@ -30,4 +19,9 @@ public:
         return ans;
     }
 };
-```
+
+int main() {
+    vector<int> nums = {1, 0, -1, 0, -2, 2};
+    vector<vector<int>> ans = Solution().fourSum(nums, 0);
+    cout << ans.size();
+}

@@ -1,11 +1,7 @@
-[167. 两数之和 II - 输入有序数组](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/)
+#include "bits/stdc++.h"
 
-看二分
+using namespace std;
 
-
-- cpp二刷
-
-```cgo
 class Solution {
 public:
     vector<int> twoSum(vector<int> &numbers, int target) {
@@ -22,4 +18,10 @@ public:
         return {0, 0};
     }
 };
-```
+
+int main() {
+    vector<int> nums = {2, 7, 11, 15};
+    vector<int> ans = Solution().twoSum(nums, 9);
+    cout << ans[0] << endl;
+    cout << ans[1] << endl;
+}

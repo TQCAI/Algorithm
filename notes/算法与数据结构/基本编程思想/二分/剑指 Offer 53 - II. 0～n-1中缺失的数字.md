@@ -9,9 +9,12 @@ class Solution:
         while l <= r:
             mid = (l + r) // 2
             if nums[mid] == mid:
-                l = l + 1
+                l = mid + 1
             else:
-                r = r -1
+                r = mid -1
         return l
 ```
+
+理解还是不够深，需要再刷一遍才行
+
 

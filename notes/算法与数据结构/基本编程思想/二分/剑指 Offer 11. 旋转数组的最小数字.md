@@ -93,3 +93,27 @@ class Solution:
         return numbers[r]
 ```
 
+- cpp 二刷
+
+有些点还没搞明白，比如 为什么是 `l = mid + 1;` , 为什么是 `return nums[r];`
+
+```cgo
+class Solution {
+public:
+    int minArray(vector<int> &nums) {
+        int l = 0, r = nums.size() - 1;
+        while (l <= r) {
+            if (nums[l] < nums[r])  // 不能是 <=
+                return nums[l];
+            int mid = l + (r - l) / 2;
+            if (nums[l] < nums[mid])
+                l = mid + 1;
+            else if (nums[l] > nums[mid])
+                r = mid;
+            else
+                l++;
+        }
+        return nums[r]; // 必须返回r， 否则在 [2,2,2,0,1] 会出错
+    }
+};
+```

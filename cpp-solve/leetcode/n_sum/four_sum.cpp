@@ -1,51 +1,9 @@
-[18. 四数之和](https://leetcode-cn.com/problems/4sum/)
+#include "bits/stdc++.h"
 
-复现`nSum`函数
+using namespace std;
 
-可是说是相当复杂
+// todo: 有空二刷一遍
 
-```python
-def nSum(nums: list, n: int, start: int, target: int):
-    sz = len(nums)
-    res = []
-    if n < 2 or sz < n:
-        return res
-    if n == 2:
-        lo = start
-        hi = sz - 1
-        while lo < hi:
-            sum = nums[lo] + nums[hi]
-            left, right = nums[lo], nums[hi]
-            if sum < target:
-                while lo < hi and nums[lo] == left:
-                    lo += 1
-            elif sum > target:
-                while lo < hi and nums[hi] == right:
-                    hi -= 1
-            else:
-                res.append([left, right])
-                while lo < hi and nums[lo] == left:
-                    lo += 1
-                while lo < hi and nums[hi] == right:
-                    hi -= 1
-    else:
-        i = start
-        while i < sz:
-            arr_list = nSum(nums, n - 1, i + 1, target - nums[i])
-            for arr in arr_list:
-                arr.append(nums[i])
-                res.append(arr)
-            while i < sz - 1 and nums[i] == nums[i + 1]:
-                i += 1
-            i += 1
-    return res
-```
-
-- cpp二刷
-
-是在三数之和的基础上改的，有必要再刷一遍
-
-```cgo
 class Solution {
 public:
     vector<vector<int>> nSum(vector<int> &nums, int n, int start, int target) {
@@ -91,4 +49,9 @@ public:
         return nSum(nums, 4, 0, target);
     }
 };
-```
+
+int main() {
+    vector<int> nums = {1, 0, -1, 0, -2, 2};
+    vector<vector<int>> ans = Solution().fourSum(nums, 0);
+    cout << ans.size();
+}
