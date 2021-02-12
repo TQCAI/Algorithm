@@ -15,6 +15,7 @@ class MinStack:
 
     def push(self, x: int) -> None:
         self.A.append(x)
+        # 从栈底往栈顶，是单调递减的
         # 不是 >
         if len(self.B) == 0 or self.B[-1] >= x: 
             self.B.append(x)

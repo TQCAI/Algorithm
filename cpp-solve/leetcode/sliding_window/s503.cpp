@@ -1,23 +1,8 @@
-[503. 下一个更大元素 II](https://leetcode-cn.com/problems/next-greater-element-ii/)
+#include "bits/stdc++.h"
+#include "vector_util.h"
 
-```python
-class Solution:
-    def nextGreaterElements(self, nums: List[int]) -> List[int]:
-        stack = []
-        L = len(nums)
-        ans = [0] * L
-        for i in range(L * 2 - 1, -1, -1):
-            num = nums[i % L]
-            while stack and stack[-1] <= num:
-                stack.pop()
-            ans[i % L] = stack[-1] if stack else -1
-            stack.append(num)
-        return ans
-```
+using namespace std;
 
-- cpp 二刷
-
-```cgo
 class Solution {
 public:
     vector<int> nextGreaterElements(vector<int> &nums) {
@@ -36,4 +21,11 @@ public:
         return ans;
     }
 };
-```
+
+int main() {
+    vector<int> nums1 = {4, 1, 2}, nums2 = {1, 3, 4, 2};
+    vector<int> ans = Solution().nextGreaterElement(
+            nums1, nums2
+    );
+    cout << ans.size();
+}

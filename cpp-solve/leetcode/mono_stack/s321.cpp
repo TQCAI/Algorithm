@@ -1,45 +1,9 @@
-[321. 拼接最大数](https://leetcode-cn.com/problems/create-maximum-number/)
+#include "bits/stdc++.h"
+#include "vector_util.h"
+
+using namespace std;
 
 
-```python
-class Solution:
-    def maxNumber(self, nums1: List[int], nums2: List[int], k: int) -> List[int]:
-        def pick_max(lst, k):
-            stack = []
-            drop = len(lst) - k  # 没想到
-            for e in lst:
-                # 没想到
-                while drop and stack and stack[-1] < e:
-                    stack.pop()
-                    drop -= 1  # 没想到
-                stack.append(e)
-            return stack[:k]  # 没想到截断 (2次)
-
-        def merge(la, lb):
-            res = []
-            # 为的是解决 [6, 7], [6, 0, 4] 这样的case
-            while la or lb:
-                # bigger 保证不为空列表
-                bigger = la if la > lb else lb
-                res.append(bigger.pop(0))  # 简写
-                # bigger.pop(0) # 简写
-            return res
-
-        ret = []
-        for sp in range(k + 1):
-            # 判断条件的 <= 写错为 < 
-            if sp <= len(nums1) and k - sp <= len(nums2):
-                tmp = merge(
-                    pick_max(nums1, sp),
-                    pick_max(nums2, k - sp),
-                )
-                ret = max(ret, tmp)
-        return ret
-```
-
-用cpp二刷，老是报错，有空用Python复现一下吧
-
-```cgo
 class Solution {
 public:
     vector<int> getMaxK(vector<int> &nums, int k) {
@@ -104,4 +68,14 @@ public:
         return false;
     }
 };
-```
+
+int main() {
+    vector<int> v = {9, 8, 7, 6};
+    vector<int> ans = Solution().getMaxK(v, 3);
+    cout << vector2str(ans) << endl;
+    cout << ans.size() << endl;
+    vector<int> v1 = {6, 7};
+    vector<int> v2 = {6, 0, 4};
+    vector<int> a2 = Solution().maxNumber(v1, v2, 5);
+    cout << vector2str(a2);
+}
