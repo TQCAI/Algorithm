@@ -1,0 +1,31 @@
+from structure import TreeNode
+
+
+class CBTInserter:
+
+    def __init__(self, root: TreeNode):
+        self.root = root
+        queue = [root]
+        self.heap = []
+        while queue:
+            top = queue.pop(0)
+            self.heap.append(top)
+            if top.left:
+                queue.append(top.left)
+            if top.right:
+                queue.append(top.right)
+
+    def insert(self, v: int) -> int:
+        node = TreeNode(v)
+        self.heap.append(node)
+        n = len(self.heap)
+        pid = n // 2 - 1
+        parent = self.heap[pid]
+        if n % 2:
+            parent.right = node
+        else:
+            parent.left = node
+        return parent.val
+
+    def get_root(self) -> TreeNode:
+        return self.root
