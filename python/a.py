@@ -1,26 +1,20 @@
 class Solution:
-    def reverse(self, a, b):
-        # 相当于左开右闭，例如k=2,
-        #  1->2->3
-        # a↑    b↑
-        # 最后返回是的 2->1->∅
-        pre = None
-        p = a
-        while p != b:
-            aft = p.next
-            p.next = pre
-            pre = p
-            p = aft
-        return pre
-
-    def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
-        a = b = head
-        # 循环体写错 (老错误)
-        for _ in range(k):
-            if b is None:
-                return head
-            b = b.next
-        new_head = self.reverse(a, b)
-        # 把 a 写成了 new_head
-        a.next = self.reverseKGroup(b, k) # b 写错 (老错误)
-        return new_head
+    def minDistance(self, word1: str, word2: str) -> int:
+        l1 = len(word1)
+        l2 = len(word2)
+        dp = [[0] * (l2 + 1) for _ in range(l1 + 1)]
+        # 错在没+1
+        for i in range(1, l1 + 1):
+            dp[i][0] = i
+        for i in range(1, l2 + 1):
+            dp[0][i] = i
+        for i in range(1, l1 + 1):
+            for j in range(1, l2 + 1):
+                # 错在没+1
+                left = dp[i][j - 1] + 1
+                down = dp[i - 1][j] + 1
+                ld = dp[i - 1][j - 1]
+                if word1[i - 1] != word2[j - 1]:
+                    ld += 1
+                dp[i][j] = min(left, down, ld)
+        return dp[l1][l2]
