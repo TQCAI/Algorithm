@@ -1,23 +1,13 @@
-from typing import List
-
-
 class Solution:
-    def search(self, nums: List[int], target: int) -> int:
-        n = len(nums)
-        l = 0
-        r = n - 1
-        while l <= r:
-            mid = (l + r) // 2
-            if nums[mid] == target:
-                return mid
-            if nums[l] < nums[mid]:
-                if nums[l] <= target < nums[mid]:
-                    r = mid - 1
-                else:
-                    l = mid + 1
-            else:  # 写成了 <
-                if nums[mid] < target <= nums[r]:
-                    l = mid + 1
-                else:
-                    r = mid - 1
-        return -1
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+        dp = [[0] * (n) for _ in range(m)]
+        dp[0][0] = grid[0][0]
+        for i in range(1, m):
+            dp[i][0] = dp[i - 1][0] + grid[i][0]
+        for i in range(1, n):
+            dp[0][i] = dp[0][i - 1] + grid[0][i]
+        for i in range(1, m):
+            for j in range(1, n):
+                dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j]
+        return dp[m - 1][n - 1]

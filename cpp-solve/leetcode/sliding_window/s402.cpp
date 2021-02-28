@@ -6,6 +6,7 @@ using namespace std;
 class Solution {
 public:
     string removeKdigits(string num, int k) {
+
         vector<char> mono_stack;
         for (char c:num) {
             while (!mono_stack.empty() && mono_stack.back() > c && k > 0) {
