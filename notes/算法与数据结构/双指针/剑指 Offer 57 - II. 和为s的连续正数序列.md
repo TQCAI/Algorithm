@@ -2,7 +2,7 @@
 
 [数学问题，数学解决](https://leetcode-cn.com/problems/he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof/solution/shu-xue-wen-ti-shu-xue-jie-jue-by-erik_chen/)
 
-时间复杂度其实也是 $O(target)$
+时间复杂度是 $O(\sqrt{target})$
 
 ```python
 class Solution:

@@ -12,6 +12,7 @@ class Solution:
         for i in range(1, n):
             n2, n3, n5 = dp[p2] * 2, dp[p3] * 3, dp[p5] * 5
             dp[i] = min(n2, n3, n5)
+            # fixme: 注意不是 elif
             if n2 == dp[i]: p2 += 1
             if n3 == dp[i]: p3 += 1
             if n5 == dp[i]: p5 += 1

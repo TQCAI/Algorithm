@@ -11,6 +11,7 @@ class Solution:
         for num in nums:
             mix ^= num
         mask = 1
+        # fixme: 在这一位上两者的异或值为1，可以用来区分ab
         while (mix & mask) == 0:
             mask <<= 1
         a, b = 0, 0

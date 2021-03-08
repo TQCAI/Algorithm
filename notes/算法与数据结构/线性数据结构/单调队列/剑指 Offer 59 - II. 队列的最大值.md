@@ -15,6 +15,7 @@ class MaxQueue:
 
     def push_back(self, value: int) -> None:
         # 单调递减队列 (前一个元素大于等于后一个元素)
+        # fixme: 老是把if 写成 while
         while self.monoq and self.monoq[-1] < value:
             self.monoq.pop()
         self.monoq.append(value)
