@@ -108,8 +108,11 @@ if __name__ == '__main__':
     # 强连通分量
     test.scc()
     print("强连通分量个数：", len(test.answer_set), "\n所有的强连通分量：", test.answer_set, "\n")
+    assert test.answer_set == [{5}, {4}, {0, 1, 2, 3, 6, 7}]
 
     test.reload()
     # 割点/边问题
     test.cut_point_and_cut_edge()
     print("割点集合：", test.answer_point, "\n割边集合：", test.answer_edge)
+    assert test.answer_point == {2, 3, 4}
+    assert test.answer_edge == {(4, 5), (3, 4)}

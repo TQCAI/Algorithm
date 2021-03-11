@@ -5,27 +5,25 @@ class Solution:
     def restoreIpAddresses(self, s: str) -> List[str]:
         ans = []
 
-        def dfs(s: str, ix: int, lst: List[str]):
-            if s == "" and len(lst) == 4:
-                ans.append(".".join(lst))
-            # 不添加到 lst
-            nix = ix + 1
-            if nix <= len(s):
-                dfs(s, nix, lst)
-            # 添加到   lst
-            if ix == 0:
+        def dfs(s, ix, path):
+            if s == "" and len(path) == 4:
+                ans.append(".".join(path))
                 return
-            if len(lst) >= 4:
+            # 不选
+            if ix <= len(s) - 1:
+                dfs(s, ix + 1, path)
+            # 选
+            if len(path) >= 4 or ix == 0:
                 return
-            sub = s[:ix]
-            remain = s[ix:]
-            if len(sub) > 1 and s[0] == '0':
+            chose, rest = s[:ix], s[ix:]
+            if int(chose) > 255 or (chose.startswith('0') and chose != '0'):
                 return
-            if int(sub) > 255:
+            cur_path = path + [chose]
+            if len(cur_path) == 4 and rest != "":
                 return
-            dfs(remain, 0, lst + [sub])
+            dfs(rest, 0, cur_path)
 
-        dfs(s, 0, [])
+        dfs(s, 1, [])
         return ans
 
 

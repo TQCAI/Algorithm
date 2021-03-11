@@ -1,13 +1,24 @@
 class Solution:
-    def minPathSum(self, grid: List[List[int]]) -> int:
-        m, n = len(grid), len(grid[0])
-        dp = [[0] * (n) for _ in range(m)]
-        dp[0][0] = grid[0][0]
-        for i in range(1, m):
-            dp[i][0] = dp[i - 1][0] + grid[i][0]
-        for i in range(1, n):
-            dp[0][i] = dp[0][i - 1] + grid[0][i]
-        for i in range(1, m):
-            for j in range(1, n):
-                dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j]
-        return dp[m - 1][n - 1]
+    def addStrings(self, num1: str, num2: str) -> str:
+        l1 = len(num1)
+        l2 = len(num2)
+        i1 = l1 - 1
+        i2 = l2 - 1
+        carry = 0
+        base = 10
+        ans = ''
+        while i1 >= 0 or i2 >= 0 or carry:
+            a = int(num1[i1]) if i1 >= 0 else 0
+            b = int(num2[i2]) if i2 >= 0 else 0
+            sum_ = a + b + carry
+            print(sum_)
+            ans = ans + str(sum_ % base)
+            carry = sum_ // base
+            i1 -= 1
+            i2 -= 1
+
+        return ans[::-1]
+
+
+ans = Solution().addStrings("123", "456")
+print(ans)

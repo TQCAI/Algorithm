@@ -24,6 +24,20 @@ def quick_sort(nums, left, right):
     quick_sort(nums, i + 1, right)
 
 
+def partition2(nums, l, r):
+    if l >= r:
+        return
+    pivot = nums[l]
+    j = l
+    for i in range(l + 1, r+1):
+        if nums[i] < pivot:
+            j += 1
+            nums[j], nums[i] = nums[i], nums[j]
+    nums[l], nums[j] = nums[j], nums[l]
+    partition2(nums, l, j - 1)
+    partition2(nums, j + 1, r)
+
+
 # nums = list(range(10))
 # random.shuffle(nums)
 nums = [5, 2, 3, 1]
@@ -34,4 +48,8 @@ class Solution:
         quick_sort(nums, 0, len(nums))
         return nums
 
-print(Solution().sortArray(nums))
+
+# print(Solution().sortArray(nums))
+
+partition2(nums, 0, len(nums)-1)
+print(nums)
